@@ -1,0 +1,12 @@
+webshop:
+  outputs:
+    dev:
+      dbname: webshop
+      host: localhost
+      pass: admin
+      port: 5432
+      schema: public
+      threads: 4
+      type: postgres
+      user: admin
+  target: dev
