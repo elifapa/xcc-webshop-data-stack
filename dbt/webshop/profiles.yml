@@ -5,17 +5,29 @@ webshop:
       host: localhost
       pass: admin
       port: 5432
-      schema: public
+      schema: "{{ env_var('DBT_DEV_SCHEMA_NAME', 'public') }}" # target schema, where we are going to write at
       threads: 4
       type: postgres
       user: admin
+      
     prod:
       dbname: webshop
       host: localhost
       pass: admin
       port: 2345
-      schema: public
+      schema: none
       threads: 4
       type: postgres
       user: admin
-  target: dev
+
+    # Initialise the sample sources to be created with macros
+    sample-dev:
+      dbname: webshop
+      host: localhost
+      pass: admin
+      port: 5432
+      schema: raw
+      threads: 4
+      type: postgres
+      user: admin
+  target: dev # dbt will run based on dev output configuration
