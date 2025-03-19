@@ -5,13 +5,10 @@
     For prod:
 
 #}
-
 {% macro generate_alias_name(custom_alias_name=none, node=none) -%}
     {# Checks custom_alias_Name #}
-    {%- if custom_alias_name is none -%}
-        {%- set table_name = node.name -%}
-    {%- else -%} {
-        %- set table_name = custom_alias_name ~ "_" ~ node.name | trim -%}
+    {%- if custom_alias_name is none -%} {%- set table_name = node.name -%}
+    {%- else -%} {%- set table_name = custom_alias_name ~ "_" ~ node.name | trim -%}
     {%- endif -%}
 
     {%- if target.name == "dev" -%}
@@ -19,12 +16,13 @@
         {%- set schema_prefix = node.unrendered_config.schema | trim %}
 
         {#- Highlight if schema hasnt been assigned right -#}
-        {%- if not schema_prefix -%} {%- set schema_prefix = "NO_ASSIGNED_SCHEMA" %} {%- endif -%}
+        {%- if not schema_prefix -%}
+            {%- set schema_prefix = "NO_ASSIGNED_SCHEMA" %}
+        {%- endif -%}
 
         {{ schema_prefix ~ "__" ~ table_name }}
 
-    {%- else -%}
-        {{table_name}}
+    {%- else -%} {{ table_name }}
 
     {%- endif -%}
 
