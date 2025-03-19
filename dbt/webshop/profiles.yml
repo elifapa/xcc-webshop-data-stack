@@ -9,7 +9,7 @@ webshop:
       threads: 4
       type: postgres
       user: admin
-      
+
     prod:
       dbname: webshop
       host: localhost

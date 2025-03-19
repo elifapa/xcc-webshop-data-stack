@@ -1,7 +1,5 @@
 with
-    source as ( 
-        select * from {{source("raw_webshop", "category")}}
-    ),
+    source as (select * from {{ source("raw_webshop", "category") }}),
 
     renamed as (
         select
