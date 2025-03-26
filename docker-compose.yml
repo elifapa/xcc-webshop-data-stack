@@ -37,20 +37,43 @@ services:
     depends_on:
       prod_postgres:
         condition: service_healthy # prod_postgres needs a healthcheck config on docker-compose
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "webshop"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 80s
 
-  gha_runner:
-    image: myoung34/github-runner:latest
+  test_postgres:
+    image: postgres:17.0
     restart: always
+    shm_size: 128mb
     environment:
-      REPO_URL: "https://github.com/${REPO_URL}"
-      RUNNER_NAME: ${RUNNER_NAME}
-      RUNNER_TOKEN: ${RUNNER_TOKEN}
-      RUNNER_WORKDIR: /tmp/runner/work
-      CONFIGURED_ACTIONS_RUNNER_FILES_DIR: /runner/data
-      RUNNER_SCOPE: repo
-      LABELS: linux,x64,self-hosted
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: webshop
+    ports:
+      - "5678:5432"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./infra/gha_runner/tmp:/tmp/runner
-      - ./infra/gha_runner/data:/runner/data
-      - ./logs/gha_runner:/runner/data/_diag
+      - ./infra/postgres/data/test:/var/lib/postgresql/data
+      - ./infra/postgres/init/non-prod:/docker-entrypoint-initdb.d
+    depends_on:
+      prod_postgres:
+        condition: service_healthy # prod_postgres needs a healthcheck config on docker-compose
+
+  # gha_runner:
+  #   image: myoung34/github-runner:latest
+  #   restart: always
+  #   environment:
+  #     REPO_URL: "https://github.com/${REPO_URL}"
+  #     RUNNER_NAME: ${RUNNER_NAME}
+  #     RUNNER_TOKEN: ${RUNNER_TOKEN}
+  #     RUNNER_WORKDIR: /tmp/runner/work
+  #     CONFIGURED_ACTIONS_RUNNER_FILES_DIR: /runner/data
+  #     RUNNER_SCOPE: repo
+  #     LABELS: linux,x64,self-hosted
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./infra/gha_runner/tmp:/tmp/runner
+  #     - ./infra/gha_runner/data:/runner/data
+  #     - ./logs/gha_runner:/runner/data/_diag

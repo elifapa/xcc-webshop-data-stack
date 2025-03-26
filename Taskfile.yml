@@ -43,6 +43,18 @@ tasks:
       - task gha_runner:push_secrets
     interactive: true
 
+  reboot/gha_runner:
+    desc: "Destroy GHA runner and restart it. Generally run in order to scrap the cached GHA connection."
+    cmds:
+      - docker compose down gha_runner
+      - rm -rf ./infra/gha_runner/data
+      - rm -rf ./infra/gha_runner/tmp
+      - echo "Github Actions runner destroyed!! hahaha"
+      - docker compose up -d gha_runner
+      - echo "Github Actions runner started! Rejoice!"
+    preconditions:
+      - task: env_checks:check_github_token
+
   destroy/all:
     desc: "Destroy all infra"
     cmds:
