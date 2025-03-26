@@ -1,4 +1,5 @@
 webshop:
+  target: dev # dbt will run based on dev output configuration
   outputs:
     dev:
       dbname: webshop
@@ -30,4 +31,23 @@ webshop:
       threads: 4
       type: postgres
       user: admin
-  target: dev # dbt will run based on dev output configuration
+
+    sample-test:
+      dbname: webshop
+      host: localhost
+      pass: admin
+      port: 5678
+      schema: raw
+      threads: 4
+      type: postgres
+      user: admin
+
+    test:
+      dbname: webshop
+      host: localhost
+      pass: admin
+      port: 5678
+      schema: "ci_{{env_var('GIT_SHA', 'TEST')}}"
+      threads: 4
+      type: postgres
+      user: admin

@@ -77,13 +77,12 @@
     Saves the result into target.schema in sample-dev.
     In any other target environment, exits the execution.
 #}
-{% macro sample_by_id_variable_rows(indexed_column) -%}
+{% macro sample_by_id_variable_rows(indexed_column, sample_target_output) -%}
     {% set foreign_table_schema = "raw_prod" %}
-    {% set sample_target_output = "sample-dev" %}
 
     {% do log("Variable sample_size_ratio: " ~ var("sample_size_ratio"), info=True) %}
-    {% do log("Target database: " ~ var("sample_size_ratio"), info=True) %}
-    {% do log("Target schema: " ~ var("sample_size_ratio"), info=True) %}
+    {% do log("Target database: " ~ target.dbname, info=True) %}
+    {% do log("Target schema: " ~ target.schema, info=True) %}
 
     {% if target.name != sample_target_output %}
         {{

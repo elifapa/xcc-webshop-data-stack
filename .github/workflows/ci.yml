@@ -1,0 +1,31 @@
+name: CI_pipeline
+on:
+  pull_request:
+    branches:
+    - master
+jobs:
+  CI_jobs:
+    runs-on: self-hosted
+    strategy:
+      fail-fast: true
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+      GIT_SHA: ${{github.sha}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check env var GITHUB_CONTEXT
+        run: echo "$GITHUB_CONTEXT"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Install python
+        run: uv python install
+      - name: Install dependencies
+        run: uv sync
+      - name: Install CI dependencies
+        run: uv sync --group ci
+      - name: dbt build in test
+        run: "uv run dbt build --select "state: modified+" --target test"
