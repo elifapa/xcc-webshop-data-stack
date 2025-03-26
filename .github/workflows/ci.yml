@@ -2,7 +2,7 @@ name: CI_pipeline
 on:
   pull_request:
     branches:
-    - main
+    - master
 jobs:
   CI_jobs:
     runs-on: ubuntu-latest
