@@ -1,5 +1,5 @@
-- name: Show GitHub context
+name: Show GitHub context
   on: workflow_dispatch
-  env:
-    GITHUB_CONTEXT: ${{ toJson(github) }}
-  run: echo "$GITHUB_CONTEXT"
+env:
+  GITHUB_CONTEXT: ${{ toJson(github) }}
+run: echo "$GITHUB_CONTEXT"
