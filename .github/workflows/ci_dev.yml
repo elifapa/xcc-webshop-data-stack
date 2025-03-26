@@ -1,6 +1,5 @@
 name: Test show GitHub context 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 jobs:
   dev_jobs:
     runs-on: ubuntu-latest
