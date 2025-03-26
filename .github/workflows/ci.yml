@@ -1,9 +1,8 @@
-- name: CI_pipeline
-  on:
-    pull_request:
-      branches:
-        - main
-
+name: CI_pipeline
+on:
+  pull_request:
+    branches:
+      - main
 jobs:
   CI_jobs:
     runs-on: ubuntu-latest
