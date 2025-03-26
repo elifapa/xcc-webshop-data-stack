@@ -15,11 +15,10 @@ jobs:
       #GIT_SHA: ---
     steps:
       - name: Checkout
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - name: Install python
         run: uv python install
       - name: Install dependencies
         run: uv sync --group ci
-
