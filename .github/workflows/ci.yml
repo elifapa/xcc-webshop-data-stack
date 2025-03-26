@@ -5,15 +5,15 @@ on:
     - master
 jobs:
   CI_jobs:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: true
-    env: 
+    env:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       GITHUB_CONTEXT: ${{ toJson(github) }}
-      #GIT_SHA: ---
+      GIT_SHA: ${{github.sha}}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,4 +24,8 @@ jobs:
       - name: Install python
         run: uv python install
       - name: Install dependencies
+        run: uv sync
+      - name: Install CI dependencies
         run: uv sync --group ci
+      - name: dbt build in test
+        run: "uv run dbt build --select "state: modified+" --target test"

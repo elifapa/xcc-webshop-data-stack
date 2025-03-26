@@ -46,6 +46,8 @@ tasks:
   reboot/gha_runner:
     desc: "Destroy GHA runner and restart it. Generally run in order to scrap the cached GHA connection."
     cmds:
+      - chmod -R 777 ./infra/gha_runner/*
+      - set -a; source .env; set +a
       - docker compose down gha_runner
       - rm -rf ./infra/gha_runner/data
       - rm -rf ./infra/gha_runner/tmp

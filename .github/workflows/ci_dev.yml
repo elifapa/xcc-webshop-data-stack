@@ -2,8 +2,8 @@ name: show_github_context
 on: workflow_dispatch
 jobs:
   dev_jobs:
-    runs-on: ubuntu-latest
-    env: 
+    runs-on: self-hosted
+    env:
       GITHUB_CONTEXT: ${{ toJson(github) }}
     steps:
       - name: Check out repository
