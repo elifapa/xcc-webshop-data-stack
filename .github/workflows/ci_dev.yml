@@ -1,4 +1,4 @@
-name: Show GitHub context
+name: Test show GitHub context 
 on: workflow_dispatch
 jobs:
   dev_jobs:
