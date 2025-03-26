@@ -1,4 +1,4 @@
-name: Test show GitHub context 
+name: show_github_context
 on: workflow_dispatch
 jobs:
   dev_jobs:
@@ -6,5 +6,7 @@ jobs:
     env: 
       GITHUB_CONTEXT: ${{ toJson(github) }}
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
       - name: Check env var GITHUB_CONTEXT
         run: echo "$GITHUB_CONTEXT"
