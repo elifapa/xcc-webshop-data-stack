@@ -28,9 +28,11 @@ jobs:
       - name: Install CI group dependencies
         run: uv sync --group ci
       - name: dbt Install dependencies
-        run: "uv run dbt deps --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/"
+        run: |
+          uv run dbt deps --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/
       - name: dbt Build in test
-        run: "uv run dbt build --select state: modified+ --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test"
+        run: |
+          uv run dbt build --select state: modified+ --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --state ./dbt/webshop/target/ --target test
       - name: dbt Generate documentation
         run: "uv run dbt docs generate"
       - name: dbt Serve documentation
