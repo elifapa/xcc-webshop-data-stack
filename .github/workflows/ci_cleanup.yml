@@ -29,6 +29,8 @@ jobs:
 
       # - name: Install CI group dependencies
       #   run: uv sync --group ci
+      - name: Create virtual environment
+        run: uv venv
 
       - name: Install psql
         run: uv pip install psql
