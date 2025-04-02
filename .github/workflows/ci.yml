@@ -13,12 +13,16 @@ jobs:
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       GITHUB_CONTEXT: ${{ toJson(github) }}
-      GIT_SHA: ${{github.sha}}
+      GIT_SHA: ${{github.pull_request.base.sha}}
+      DBT_PROFILES_DIR: ${{ secrets.DBT_PROFILES_DIR }}
+      DBT_PROJECT_DIR: ${{ secrets.DBT_PROJECT_DIR }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Check env var GITHUB_CONTEXT
         run: echo "$GITHUB_CONTEXT"
+      - name: Check env var GITHUB_SHA
+        run: echo "$GITHUB_SHA
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - name: Install python
@@ -29,13 +33,13 @@ jobs:
         run: uv sync --group ci
       - name: dbt Install dependencies
         run: |
-          uv run dbt deps --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/
+          uv run dbt deps
       - name: dbt Test connection
         run: |
-          uv run dbt debug --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test
+          uv run dbt debug --target test
       - name: dbt Build in test
         run: |
-          uv run dbt build --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test
+          uv run dbt build --target test
       - name: dbt Generate documentation
         run: "uv run dbt docs generate"
       - name: dbt Serve documentation
