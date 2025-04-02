@@ -37,4 +37,4 @@ jobs:
 
       - name: Connect to PG db and drop CI schema
         run: |
-          psql -h test_postgres -p 5432 -U $POSTGRES_USER -W $POSTGRES_PASSWORD -d $POSTGRES_DB -c "DROP SCHEMA IF EXISTS $GITHUB_PR_SCHEMA CASCADE;"
+          PGPASSWORD=$POSTGRES_PASSWORD psql -h test_postgres -p 5432 -U $POSTGRES_USER -d $POSTGRES_DB -c "DROP SCHEMA IF EXISTS $GITHUB_PR_SCHEMA CASCADE;"
