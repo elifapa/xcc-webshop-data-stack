@@ -47,7 +47,7 @@ webshop:
       host: test_postgres
       pass: admin
       port: 5432
-      schema: "ci_{{env_var('GITHUB_PR_NUMBER', 'TEST')}}"
+      schema: "ci_pr_{{env_var('GITHUB_PR_NUMBER', 'TEST')}}"
       threads: 4
       type: postgres
       user: admin
