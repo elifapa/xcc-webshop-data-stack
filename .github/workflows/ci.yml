@@ -12,7 +12,6 @@ jobs:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      GITHUB_CONTEXT: ${{ toJson(github) }}
       GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
       DBT_PROFILES_DIR: ${{ secrets.DBT_PROFILES_DIR }}
       DBT_PROJECT_DIR: ${{ secrets.DBT_PROJECT_DIR }}
@@ -25,7 +24,7 @@ jobs:
         uses: tj-actions/changed-files@v46.0.3
 
       - name: Check env var GITHUB_CONTEXT
-        run: echo "$GITHUB_CONTEXT"
+        run: echo '${{ toJson(github) }}'
 
       - name: Print info
         run: |
