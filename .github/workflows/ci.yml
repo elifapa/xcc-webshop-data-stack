@@ -19,27 +19,47 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Changed Files
+        id: file_changes
+        uses: tj-actions/changed-files@v46.0.3
+
       - name: Check env var GITHUB_CONTEXT
         run: echo "$GITHUB_CONTEXT"
-      - name: Check env var GITHUB_PR_NUMBER
-        run: echo "$GITHUB_PR_NUMBER"
+
+      - name: Print info
+        run: |
+          echo PR number: "$GITHUB_PR_NUMBER"
+          echo Changed files: '${{ steps.file_changes.outputs.all_changed_files}}'
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
+
       - name: Install python
         run: uv python install
+
       - name: Install project dependencies
         run: uv sync
+
       - name: Install CI group dependencies
         run: uv sync --group ci
+
+      #### LINTING ####
+      - name: Run sqlfmt
+        run: sqlfmt --diff ${{ steps.file_changes.outputs.all_changed_files }}
+
       - name: dbt Install dependencies
         run: |
           uv run dbt deps
+
       - name: dbt Test connection
         run: |
           uv run dbt debug --target test
+
       - name: dbt Build in test
         run: |
           uv run dbt build -s "state:modified+" --target test --state ./target
+
       - name: dbt Generate documentation
         run: |
           uv run dbt docs generate --target test
