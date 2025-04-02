@@ -11,7 +11,7 @@
     {%- else -%} {%- set table_name = custom_alias_name ~ "_" ~ node.name | trim -%}
     {%- endif -%}
 
-    {%- if target.name == "dev" -%}
+    {%- if target.name == "dev" or target.name == "test" -%}
         {#- Get the custom schema name -#}
         {%- set schema_prefix = node.unrendered_config.schema | trim %}
 

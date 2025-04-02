@@ -203,7 +203,6 @@ source = { virtual = "." }
 dependencies = [
     { name = "dbt-core" },
     { name = "dbt-postgres" },
-    { name = "pynacl" },
 ]
 
 [package.dev-dependencies]
@@ -211,9 +210,15 @@ book = [
     { name = "mkdocs" },
     { name = "mkdocs-material" },
 ]
+ci = [
+    { name = "isort" },
+    { name = "shandy-sqlfmt", extra = ["jinjafmt"] },
+    { name = "yamllint" },
+]
 dev = [
     { name = "isort" },
     { name = "pre-commit" },
+    { name = "pynacl" },
     { name = "ruff" },
     { name = "shandy-sqlfmt", extra = ["jinjafmt"] },
     { name = "yamllint" },
@@ -223,7 +228,6 @@ dev = [
 requires-dist = [
     { name = "dbt-core", specifier = ">=1.8.9" },
     { name = "dbt-postgres", specifier = ">=1.8.2" },
-    { name = "pynacl", specifier = ">=1.5.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -231,9 +235,15 @@ book = [
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-material", specifier = ">=9.6.7" },
 ]
+ci = [
+    { name = "isort", specifier = ">=6.0.1" },
+    { name = "shandy-sqlfmt", extras = ["jinjafmt"], specifier = ">=0.26.0" },
+    { name = "yamllint", specifier = ">=1.35.1" },
+]
 dev = [
     { name = "isort", specifier = ">=6.0.0" },
     { name = "pre-commit", specifier = ">=4.0.1" },
+    { name = "pynacl", specifier = ">=1.5.0" },
     { name = "ruff", specifier = ">=0.9.6" },
     { name = "shandy-sqlfmt", extras = ["jinjafmt"], specifier = ">=0.26.0" },
     { name = "yamllint", specifier = ">=1.35.1" },
