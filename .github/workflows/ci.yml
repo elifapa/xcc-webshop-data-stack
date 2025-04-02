@@ -23,12 +23,12 @@ jobs:
         uses: astral-sh/setup-uv@v5
       - name: Install python
         run: uv python install
-      - name: Install dependencies
+      - name: Install project dependencies
         run: uv sync
-      - name: Install CI dependencies
+      - name: Install CI group dependencies
         run: uv sync --group ci
       - name: dbt Install dependencies
-        run: "uv run dbt deps"
+        run: "uv run dbt deps --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/"
       - name: dbt Build in test
         run: "uv run dbt build --select state: modified+ --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test"
       - name: dbt Generate documentation
