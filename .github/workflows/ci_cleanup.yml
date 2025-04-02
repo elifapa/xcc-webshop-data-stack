@@ -1,0 +1,40 @@
+name: CI_cleanup
+on:
+  merge:
+    branches:
+      - master
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  CI_cleanup_jobs:
+    runs-on: self-hosted
+    strategy:
+      fail-fast: true
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      GITHUB_PR_SCHEMA: "ci_pr_${{github.event.pull_request.number}}"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install python
+        run: uv python install
+
+      # - name: Install CI group dependencies
+      #   run: uv sync --group ci
+
+      - name: Install psql
+        run: uv pip install psql
+
+      - name: Connect to PG db and drop CI schema
+        run: |
+          psql -h test_postgres -p 5432 -U $POSTGRES_USER -W $POSTGRES_PASSWORD -d $POSTGRES_DB -c "DROP SCHEMA IF EXISTS $GITHUB_PR_SCHEMA CASCADE;"

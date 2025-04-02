@@ -23,8 +23,8 @@ jobs:
         id: file_changes
         uses: tj-actions/changed-files@v46.0.3
 
-      - name: Check env var GITHUB_CONTEXT
-        run: echo '${{ toJson(github) }}'
+      # - name: Check env var GITHUB_CONTEXT
+      #   run: echo '${{ toJson(github) }}'
 
       - name: Print info
         run: |
