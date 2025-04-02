@@ -21,7 +21,7 @@ dev-dependencies = [
 
 [tool.ruff]
 include = ["pyproject.toml", "scripts/**/*.py"]
-exclude = [".lock"]
+exclude = [".lock", ".yaml", ".yml", ".sql"]
 
 [dependency-groups]
 book = [
