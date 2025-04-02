@@ -12,7 +12,7 @@ jobs:
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-      GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
+      GITHUB_PR_SCHEMA: "ci_pr_${{github.event.pull_request.number}}"
       DBT_PROFILES_DIR: ${{ secrets.DBT_PROFILES_DIR }}
       DBT_PROJECT_DIR: ${{ secrets.DBT_PROJECT_DIR }}
     steps:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Print info
         run: |
-          echo PR number: "$GITHUB_PR_NUMBER"
+          echo PR number: "$GITHUB_PR_SCHEMA"
           echo Changed files: '${{ steps.file_changes.outputs.all_changed_files}}'
 
       - name: Install uv
