@@ -33,7 +33,7 @@ jobs:
       - name: Install psql
         run: |
           sudo apt update
-          sudp apt install -y postgresql-client
+          sudo apt install -y postgresql-client
 
       - name: Connect to PG db and drop CI schema
         run: |
