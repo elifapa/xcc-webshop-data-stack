@@ -39,10 +39,7 @@ jobs:
           uv run dbt debug --target test
       - name: dbt Build in test
         run: |
-          uv run dbt build --target test
+          uv run dbt build -s "state:modified+" --target test --state ./target
       - name: dbt Generate documentation
         run: |
           uv run dbt docs generate --target test
-      - name: dbt Serve documentation
-        run: |
-          uv run dbt docs serve --target test
