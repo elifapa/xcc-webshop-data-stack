@@ -45,7 +45,7 @@ jobs:
 
       #### LINTING ####
       - name: Run sqlfmt
-        run: sqlfmt --diff ${{ steps.file_changes.outputs.all_changed_files }}
+        run: uv run sqlfmt --diff ${{ steps.file_changes.outputs.all_changed_files }}
 
       - name: dbt Install dependencies
         run: |
