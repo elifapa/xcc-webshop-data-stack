@@ -46,6 +46,12 @@ jobs:
       #### LINTING ####
       - name: Run sqlfmt
         run: uv run sqlfmt --diff ${{ steps.file_changes.outputs.all_changed_files }}
+      - name: Run yaml lint
+        run: uv run yamllint --format github ${{ steps.file_changes.outputs.all_changed_files }}
+      - name: Run ruff lint
+        run: uv run ruff check --output-format=github ${{ steps.file_changes.outputs.all_changed_files }}
+      - name: Run isort
+        run: uv run isort --check-only ${{ steps.file_changes.outputs.all_changed_files }}
 
       - name: dbt Install dependencies
         run: |
