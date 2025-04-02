@@ -41,6 +41,8 @@ jobs:
         run: |
           uv run dbt build --target test
       - name: dbt Generate documentation
-        run: "uv run dbt docs generate"
+        run: |
+          uv run dbt docs generate --target test
       - name: dbt Serve documentation
-        run: "uv run dbt docs serve"
+        run: |
+          uv run dbt docs serve --target test
