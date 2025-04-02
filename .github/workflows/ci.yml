@@ -27,5 +27,9 @@ jobs:
         run: uv sync
       - name: Install CI dependencies
         run: uv sync --group ci
-      - name: dbt build in test
-        run: "uv run dbt build --select "state: modified+" --target test"
+      - name: dbt Build in test
+        run: "uv run dbt build --select state: modified+ --target test"
+      - name: dbt Generate documentation
+        run: "uv run dbt docs generate"
+      - name: dbt Serve documentation
+        run: "uv run dbt docs serve"
