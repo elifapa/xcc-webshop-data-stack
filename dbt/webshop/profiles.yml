@@ -46,7 +46,7 @@ webshop:
       dbname: webshop
       host: test_postgres
       pass: admin
-      port: 5678
+      port: 5432
       schema: "ci_{{env_var('GIT_SHA', 'TEST')}}"
       threads: 4
       type: postgres
