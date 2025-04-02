@@ -1,8 +1,5 @@
 name: CI_cleanup
 on:
-  merge:
-    branches:
-      - master
   pull_request:
     types: [closed]
     branches:
