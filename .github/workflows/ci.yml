@@ -22,7 +22,7 @@ jobs:
       - name: Check env var GITHUB_CONTEXT
         run: echo "$GITHUB_CONTEXT"
       - name: Check env var GITHUB_SHA
-        run: echo "$GITHUB_SHA
+        run: echo "$GITHUB_SHA"
       - name: Install uv
         uses: astral-sh/setup-uv@v5
       - name: Install python
