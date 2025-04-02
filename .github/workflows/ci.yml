@@ -30,6 +30,9 @@ jobs:
       - name: dbt Install dependencies
         run: |
           uv run dbt deps --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/
+      - name: dbt Test connection
+        run: |
+          uv run dbt debug --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test
       - name: dbt Build in test
         run: |
           uv run dbt build --project-dir ./dbt/webshop/ --profiles-dir ./dbt/webshop/ --target test
