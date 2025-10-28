@@ -21,15 +21,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-
-      - name: Install python
-        run: uv python install
-
-      # - name: Install CI group dependencies
-      #   run: uv sync --group ci
-
       - name: Install psql
         run: |
           sudo apt update

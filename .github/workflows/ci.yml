@@ -51,6 +51,7 @@ jobs:
       - name: Run isort
         run: uv run isort --check-only ${{ steps.file_changes.outputs.all_changed_files }}
 
+      # dbt STUFF
       - name: dbt Install dependencies
         run: |
           uv run dbt deps
